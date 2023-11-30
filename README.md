@@ -1,6 +1,6 @@
 # WANNA HUSTLE? (STEPS TO RUN PROGRAM)
-  -clone the repo
-  -ghci Hustler.hs
+  - clone the repo
+  - ghci Hustler.hs
   -
 
 
