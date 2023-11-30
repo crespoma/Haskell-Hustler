@@ -1,4 +1,47 @@
-# Main:
+# WANNA HUSTLE? (STEPS TO RUN PROGRAM)
+  -clone the repo
+  -ghci Hustler.hs
+  -
+
+
+
+
+
+
+     ////^\\\\
+      | ^   ^ |
+     @ (o) (o) @
+      |   <   |
+      |  ___  |
+       \_____/
+     ____|  |____
+    /    \__/    \
+   /              \
+  /\_/|        |\_/\
+ / /  |        |  \ \
+( <   |        |   > )
+ \ \  |        |  / /
+  \ \ |________| / /
+   \ \|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# MAIN
 - Welcome user
   - Display Instructions of the game
   - Begin game
@@ -8,4 +51,17 @@
     - Distance cost (distance value - 5)
     - Starting position (house)
     - *Narrator* ASCII
-        
+    -         
+# KEY FUNCTIONS
+
+
+
+
+
+
+
+
+
+
+
+# HELPER FUNCTIONS
