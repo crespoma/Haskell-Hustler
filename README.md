@@ -52,6 +52,17 @@
     - Distance cost (distance value - 5)
     - Starting position (house)
     - *Narrator* ASCII
+    - Prompt user for destination
+      - check if wallet >= distanceCost
+        - update wallet = wallet - distanceCost
+        - update Location
+        - Prompt user to buy or sell
+            - list Shop items
+            - check if wallet > itemCost
+            - update wallet
+            - prompt user for next step
+        -Prompt user for new destination
+        - Exit on user input or wallet <= 0
    
 ### UI DISPLAY
   ghci <fileName>
@@ -84,7 +95,15 @@
                   
                   
 # KEY FUNCTIONS
+readNapkin :: FilePath -> IO String
+  - Description
+    Read content of textFile and return it as a string
+  readNapkin filePath = readFile filePath
 
+checkoutBackpack :: Wallet -> IO()
+ - Description
+     Display user's backpack and wallet
+     checkoutBackpack wallet = putStrLn $ "Wallet: $" ++ show wallet ++ "\nBackpack: [list of items]"
 
 
 
