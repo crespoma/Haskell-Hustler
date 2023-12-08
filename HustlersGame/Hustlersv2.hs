@@ -13,7 +13,7 @@ initialState :: GameState
 initialState = GameState
   { backpack = ["napkin", "map"]
   , wallet = 10
-  , location = "Home"
+  , location = "home"
   }
 
 displayState :: GameState -> IO ()
@@ -54,6 +54,9 @@ tryWriteFile filePath content = do
     Left (ex :: IOException) -> Left $ "Error writing to file: " ++ show ex
     Right _ -> Right ()
 
+
+
+
 buyItem :: GameState -> FilePath -> String -> Int -> IO GameState
 buyItem state shopFilePath item quantity = do
   shopResult <- readShopItems shopFilePath
@@ -66,10 +69,16 @@ buyItem state shopFilePath item quantity = do
       case writeResult of
         Left err -> do
           let (updatedWallet, updatedBackpack) = updateWalletAndBackpack state item quantity
-          putStrLn $ "You bought " ++ show quantity ++ " " ++ item ++ "(s)."
-          let newState = state { wallet = updatedWallet, backpack = updatedBackpack }
-          displayState newState  -- Display the updated state
-          return newState
+          if (updatedWallet <= 0)
+            then handleAction state "quit" False
+             else do
+              let newState = state { wallet = updatedWallet, backpack = updatedBackpack }
+              displayState newState  -- Display the updated state
+              return newState
+                
+          
+          
+        
         Right _ -> do
           let (updatedWallet, updatedBackpack) = updateWalletAndBackpack state item quantity
           putStrLn $ "You bought " ++ show quantity ++ " " ++ item ++ "(s)."
@@ -111,7 +120,7 @@ main = loop initialState False False
 getPrompt :: GameState -> Bool -> Bool -> IO String
 getPrompt state hasReadNapkin hintDisplayed =
   case location state of
-    "Home" -> return $ if hasReadNapkin || hintDisplayed
+    "home" -> return $ if hasReadNapkin || hintDisplayed
                         then "Where you headed? "
                         else "Hint: enter 'napkin' and hit enter to read it to checkout the rules. 'map' will show the distance from shop.\nWAKE UP CHOOM CHECKOUT THAT NAPKIN IN YOUR BACKPACK. (type 'quit' to exit): "
     "neighbor" -> case wallet state <= 0 of
@@ -171,6 +180,7 @@ handleAction state "neighbor" _ = do
               return state
             Right shopContent -> do
               putStrLn shopContent
+              putStrLn ""
               displayState newState
               buyAction <- buyPrompt
               newStateAfterBuy <- handleAction newState buyAction False
@@ -189,6 +199,7 @@ handleAction state "leave" _ = do
   putStrLn "Where would you like to travel next?"
   destination <- getLine
   let newState = travel state destination
+  --displayState newState
   return newState
 handleAction state "cigarette" _ = do
   putStrLn "How many would you like to buy?"
@@ -203,7 +214,7 @@ buyPrompt :: IO String
 buyPrompt = do
   putStrLn "GET CHROMED OUT CHOOM, What do you need"
   input <- getLine
-  if input `elem` ["cigarette", "Liberty Pistol", "leave", "buyin", "sellin"]
+  if input `elem` ["cigarette", "Liberty Pistol", "home", "buyin", "sellin"]
     then return input
     else do
       putStrLn "Invalid choice. Try again."
@@ -257,7 +268,9 @@ travel state destination =
   case destination of
     "neighbor" -> state { wallet = wallet state - 2, location = destination}
     "home" -> state {wallet = wallet state - 2, location = destination}
+    
     _ -> state
+    
 
 -- costToTravel :: GameState -> Int -> Int
 -- costToTravel state distance =
