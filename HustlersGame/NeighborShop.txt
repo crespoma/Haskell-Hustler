@@ -1,0 +1,11 @@
+Cigarette
+-----------------------------------
+Quantity of item [ 5 ]
+Base value to purchase [ $1 ]
+Re-sell value [ $0.50 ]
+
+Liberty Pistol
+-----------------------------------
+Quantity of item [ 1 ]
+Base value to purchase [ $50 ]
+Re-sell value [ $25 ]
